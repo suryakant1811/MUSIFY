@@ -1,0 +1,45 @@
+insted of npm intall use npm ci --only production 
+ci => clean inal and no devdependices to install
+
+backend doesnt need to build as it is ready to run 
+
+===============================================================================
+
+CMD and ENTRYPOINT both are used ti run the conatinaer 
+
+CMD 
+Defines the default command to run in a container and Can be overridden at runtime
+
+CMD ["node", "App.js"]  (in dockerfile)
+CLI docker run myapp node test.js  (myapp is name)
+Runs: node test.js (CMD overridden)
+
+ENTRYPOINT
+Defines the fixed main command Cannot be overridden, only arguments can be added
+
+ENTRYPOINT ["node"]  (fixed)
+CMD ["App.js"]    (can be changes)
+docker run myapp test.js
+Runs: node test.js
+
+CMD → flexible (can change completely)
+
+ENTRYPOINT → fixed (only arguments change)
+
+==============================================================================
+
+right now as we have created the seprate docker folder so we will not run the docker build -t musify-backend-image . as the package.json is not in this place we will go to the place where package.json exist and from their we will be runnign docker build -f docker build -f ../../docker/backend/Dockerfile -t musify-backend .
+
+and the last dot define => Use CURRENT FOLDER as the build context
+if you dont give the -f then docker will try to get  the dockerfile from the context to overcome from this give -f Dockerfile to run it 
+
+
+
+either give build context full path with -f Dockerfile or go to project give build context . then -f full path to docker 
+
+if on same foler docker build -t musify-backend
+
+
+multistage size = 54 normal 140
+
+

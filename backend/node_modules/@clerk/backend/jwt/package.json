@@ -1,5 +1,0 @@
-{
-  "main": "../dist/jwt/index.js",
-  "module": "../dist/jwt/index.mjs",
-  "types": "../dist/jwt/index.d.ts"
-}
