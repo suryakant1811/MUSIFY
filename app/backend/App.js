@@ -58,7 +58,7 @@ cron.schedule("0 * * * *", () => {
   }
 })
 
-app.get("/", (req, res) => res.status("live working "))
+app.get("/", (req, res) => res.status(200).send("live working"));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
