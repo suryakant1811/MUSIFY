@@ -42,4 +42,31 @@ if on same foler docker build -t musify-backend
 
 multistage size = 54 normal 140
 
+/var/www/html -> for nginx/apache in the ubuntu 
+/usr/share/nginx/html  -> for nginx/apache for the docker container as baseImages are docker images only expose 80 for the nginx
 
+docker creates seprate containers from each container and to let them talk we uses the docker  network that allows to communicate but t now the fronend should call the backend docker container name not the localhost (localhost -> mean ownself as they are in container nothing live outside ) 
+frontend calls http://backend-container-name/7000
+
+their are 2 methods to pas the env  
+
+(backend)
+1 -> send them by using -e x=y
+2 -> create a .env file having all the values to pass use flag --env-file .env
+
+(frontend) it gives the /dist folder so while running the dockerfile the things get in it 
+1 -> just have the .env in the folder and run build without adding .env in .dockerignore 
+2 -> uses two cmds  ARG  & --build-arg during run time 
+
+(Dockerfile)
+ARG VITE_API_URL
+ARG VITE_CLERK_PUBLISHABLE_KEY
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_CLERK_PUBLISHABLE_KEY=$VITE_CLERK_PUBLISHABLE_KEY
+
+(CLI)
+docker build \
+  -t musify-frontend \
+  --build-arg VITE_API_URL=http://backend:7000 \
+  --build-arg VITE_CLERK_PUBLISHABLE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
+  .

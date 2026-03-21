@@ -16,9 +16,7 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-COPY --from=builder  /app/package.*  /app/
-COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/App.js /app/App.js
+COPY --from=builder /app /app
 
 EXPOSE 7000
 
