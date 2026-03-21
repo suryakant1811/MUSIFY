@@ -22,10 +22,21 @@ import fileUpload from "express-fileupload";
 
 const __dirname = path.resolve();
 const app = express();
+
+// app.use(cors({
+//   origin:["http://localhost:3000", "https://musify-eight-black.vercel.app/"],
+//   credentials: true
+// }));
+
 app.use(cors({
-  origin:["http://localhost:3000", "https://musify-eight-black.vercel.app/"],
+  origin: [
+  "http://localhost:3000",
+  "https://musify-eight-black.vercel.app",        // production
+  "https://musify-qii48v8nq-suryakant-dwivedis-projects.vercel.app"  // current preview
+],
   credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
