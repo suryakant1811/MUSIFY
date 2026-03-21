@@ -31,8 +31,7 @@ const app = express();
 app.use(cors({
   origin: [
   "http://localhost:3000",
-  "https://musify-eight-black.vercel.app",        // production
-  "https://musify-qii48v8nq-suryakant-dwivedis-projects.vercel.app"  // current preview
+  "https://musify-eight-black.vercel.app"
 ],
   credentials: true
 }));
