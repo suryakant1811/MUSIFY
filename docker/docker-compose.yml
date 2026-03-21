@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  
+  backend:
+    image: musify-backend:latest 
+
+    env_file:
+      ./.env
+
+    ports:
+      - 7000:7000
+
+    networks:
+      - musify-network
+
+  frontend:
+
+    image: musify-frontend:latest
+    ports:
+      - 3000:80
+    networks:
+      - musify-network
+
+networks:
+  musify-network:
+    driver: bridge

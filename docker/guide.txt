@@ -67,6 +67,26 @@ ENV VITE_CLERK_PUBLISHABLE_KEY=$VITE_CLERK_PUBLISHABLE_KEY
 (CLI)
 docker build \
   -t musify-frontend \
-  --build-arg VITE_API_URL=http://backend:7000 \
+  --build-arg VITE_API_URL=http://localhost:7000 \
   --build-arg VITE_CLERK_PUBLISHABLE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
   .
+
+replace localhost with ip of ec2 if it is used
+
+look this should be done as we can pass env while in cli as in building image cause to give finnal /dist app so -env flag doesnt work what we did insted is ising the above methods
+
+to get in the container docker exec -it containerID sh 
+
+Docker-compose
+The problem Compose solves
+✕
+Without Compose — 5 commands to remember
+docker network create musify-network
+docker run -d --name mongo --network musify-network mongo
+docker run -d --name backend --network musify-network -p 7000:7000 …
+docker run -d --name frontend --network musify-network -p 3000:80 …
+(and you forgot env vars, volumes, restart policies…)
+✓
+With Compose — 1 command
+docker compose up -d
+Everything declared once in docker-compose.yml
