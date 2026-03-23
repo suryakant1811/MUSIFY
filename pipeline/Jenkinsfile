@@ -31,7 +31,12 @@ pipeline{
 
         stage(
             steps("BUILD DOCKER IMAGE"){
-                dir()
+                dir("app/backend"){
+                    sh "docker build -f ../docker/backend/Dockerfile -t suryasuraj/musify-backend ."
+                }
+                dir("app/frontend"){
+                    sh "docker build -f ../docker/frontend/Dockerfile  -t suryasuraj/musify-frontend ."
+                }
             }
         )
     }
