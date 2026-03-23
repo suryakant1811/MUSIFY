@@ -1,0 +1,39 @@
+pipeline{
+
+    agent: any
+
+    environment{
+
+    }
+
+    stages{
+
+        stage(
+            steps("GIT CHECKOUT"){
+                git branch: 'main', url: 'https://github.com/suryakant1811/MUSIFY.git'
+            }
+        )
+
+        stage(
+            steps("SONARQUBE SCANNER"){
+                echo "Running sonarqube for security scan"
+                sh ''' 
+                    sonar-scanner \
+                    -Dsonar.projectKey=musify_prod \
+                    -Dsonar.projectName=musify_prod \
+                    -Dsonar.projectVersion=1.0 \
+                    -Dsonar.sources=app/backend,app/frontend \
+                    -Dsonar.host.url=$SONAR_HOST_URL \
+                    -Dsonar.token=$SONAR_TOKEN
+                '''
+            }
+        )
+
+        stage(
+            steps("BUILD DOCKER IMAGE"){
+                dir()
+            }
+        )
+    }
+
+}

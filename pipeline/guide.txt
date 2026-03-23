@@ -1,0 +1,40 @@
+basically pipeleine start with pipeline{}
+
+insode we create stages -> stage -> steps
+
+pipeleine{
+    agaent any
+
+    environment{
+        variabel = value
+    }
+
+    stages{
+        stage(steps("step name 1"){ "task to do 1 })
+        stage(steps("step name 2"){ "task to do 2 })
+    }
+
+    post(
+        success{ emailext( subject: "xyz_subject", body: "xyz_body", to: "xyz@gmail.com ) }
+        failure{ emailext( subject: "xyz_subject", body: "xyz_body", to: "xyz@gmail.com ) }
+    )
+
+}
+
+
+
+environment block on left have variable(anything) while right side have values from jenkins credentials 
+
+the post block will always execute and it has block as success failure always gives things as named to enable email to work and get to the persome whom you want in to block under success failure and cofigure the below thing mentioned
+
+Extended email jenkins
+ SMTP server: smtp.gmail.com
+ SMTP Port: 587
+ Use SMTP Authentication: ✔
+ Username: yourgmail@gmail.com     //google app password
+ Password: Gmail App Password
+ Use TLS: ✔
+
+now in the same server where jenkins is runnig  you have to install eveything which hte pipeline is using as docker, k8s, soanqrube and everything 
+
+for the first time we will use to install eveytthoing mannualy then use ansible to install eveything 

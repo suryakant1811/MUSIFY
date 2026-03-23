@@ -52,3 +52,7 @@ Before creating HPA  Metrics Server must be installed
 
 kubectl top pods -> if error install Metrics servers else good to go
 
+// ingress controller to get lb 
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml  
+
