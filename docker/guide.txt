@@ -90,3 +90,10 @@ docker run -d --name frontend --network musify-network -p 3000:80 …
 With Compose — 1 command
 docker compose up -d
 Everything declared once in docker-compose.yml
+
+
+******************************* IMPORTANT *******************************
+
+but on runniogn teo seprate container for frontend and backend using a container i was using the 
+http://localhost:7000/ if on ec2 then use the instanceip:7000 am i corect but in the k8s they talk via service name but the images are build before so the env is already baked into the image so if i have to make my k8s word and deploy it then i would be needing to change the env  localhost to service  then rebuild image and then the k8s will work 
+

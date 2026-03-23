@@ -1,0 +1,54 @@
+Kubernetes ensures: “Your app is ALWAYS running, ALWAYS reachable, ALWAYS scalable”
+
+Even if: servers crash, traffic spikes, deployments fail
+
+Node (Machine) are of two type 
+· Control Plane (brain)
+· Worker Node (does actual work)
+
+Pod (Smallest unit) 👉 A Pod = one or more containers running together
+💡 Important: You NEVER deploy containers directly Kubernetes wraps them inside Pods
+
+Deployment (Auto manager)
+👉 You never run Pods manually in production.
+
+Deployment says:
+“I want 3 replicas of my app ALWAYS running”
+
+Kubernetes ensures:
+If 1 Pod dies → new one created
+If Node crashes → rescheduled somewhere else
+
+Service (Networking layer)
+
+Pods are: dynamic they die & recreate, IP changes
+
+👉 So Service gives:
+stable IP
+load balancing
+
+Scheduler (Brain decision maker)
+
+👉 Decides: “Which Pod goes to which Node?”
+
+Based on: CPU Memory rules affinity
+
+Kubelet (Node agent)
+
+👉 Runs on every node
+Responsible for: creating pods talking to control plane
+
+
+
+but on runniogn teo seprate container for frontend and backend using a container i was using the 
+http://localhost:7000/ if on ec2 then use the instanceip:7000 am i corect but in the k8s they talk via service name but the images are build before so the env is already baked into the image so if i have to make my k8s word and deploy it then i would be needing to change the env  localhost to service  then rebuild image and then the k8s will work 
+
+“Image is fixed, but container filesystem and environment CAN be modified at runtime by Kubernetes” for backend but not for frontend as all the things are backed during image creation  so we have two option
+1 -> to rebuild emage inorder to backed the env modified
+2 -> to inject teh env usinfg config.js (runtime env enjection)
+
+
+Before creating HPA  Metrics Server must be installed
+
+kubectl top pods -> if error install Metrics servers else good to go
+

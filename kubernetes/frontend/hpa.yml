@@ -1,0 +1,22 @@
+apiVersion: autoscaling/v2
+kind: HorizonatalPodAutosaler
+metadata:
+  name: frontend-hpa
+
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: frontend-Deployment
+
+  minReplicas: 2
+  maxReplicas: 2
+
+  metrics:
+    type: Resource
+    resources:
+      - name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75

@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: backend-label
+
+  template:
+    metadata:
+      labels:
+        app: backend-label
+
+    spec:
+      containers:
+        - name: backend
+          image: suryasuraj/musify-backend:latest
+
+          ports:
+            - containerPort: 7000
+
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-configMap
+                  key: PORT
+
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: MONGO_URI
+
+            - name: ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: ADMIN_EMAIL
+
+            - name: CLOUDINARY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: CLOUDINARY_API_KEY
+
+            - name: CLOUDINARY_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: CLOUDINARY_API_SECRET
+
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: CLOUDINARY_CLOUD_NAME
+
+            - name: NODE_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: NODE_ENV
+
+            - name: CLERK_PUBLISHABLE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: CLERK_PUBLISHABLE_KEY
+
+            - name: CLERK_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-Secret
+                  key: CLERK_SECRET_KEY
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
