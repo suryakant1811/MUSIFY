@@ -1,0 +1,7 @@
+aws configure the cmd to set teh aws account with your laptop
+
+in vpc we need to give the cider_block as this allow the how much network should it handle
+
+next we need to grant enable_dns_hostname = true enable_dns_support = true this gives capability to read google.com insted of its ip
+
+

@@ -3,7 +3,8 @@ pipeline{
     agent: any
 
     environment{
-
+        SONAR_HOST_URL=
+        SONAR_TOKEN=
     }
 
     stages{
@@ -32,13 +33,70 @@ pipeline{
         stage(
             steps("BUILD DOCKER IMAGE"){
                 dir("app/backend"){
-                    sh "docker build -f ../docker/backend/Dockerfile -t suryasuraj/musify-backend ."
+                    sh "docker build -f ../docker/backend/Dockerfile -t suryasuraj/musify-backend:latest ."
                 }
                 dir("app/frontend"){
-                    sh "docker build -f ../docker/frontend/Dockerfile  -t suryasuraj/musify-frontend ."
+                    sh "docker build -f ../docker/frontend/Dockerfile  -t suryasuraj/musify-frontend:latest ."
                 }
             }
         )
+
+        stage(
+            steps("TRIVY SCAN"){
+                sh''' 
+                    trivy image --exit-code 0 --severity HIGH,CRITICAL suryasuraj/musify-backend:latest
+                    trivy image --exit-code 0 --severity HIGH,CRITICAL suryasuraj/musify-backend:latest
+                '''
+            }
+        )
+
+        stage("PUSH IMAGE TO DOCKERHUB") {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub_cred',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+
+                    sh '''
+                    docker login -u $DOCKER_USER --password-stdin
+
+                    docker push suryasuraj/musify-backend:latest
+                    docker suryasuraj/musify-frontend:latest
+                    '''
+                }
+            }
+        }
+
+        stage("DEPLOY WITH KUBERNETES"){
+            steps{
+                sh '''
+                    kubectl set image deployment/backend-deployment backend=suryasuraj/musify-backend:latest -n default
+                    kubectl set image deployment/frontend-deployment frontend=suryasuraj/musify-frontend:latest -n default
+
+                    kubectl rollout status deployment/backend-deployment -n default
+                    kubectl rollout status deployment/frontend-deployment -n default
+                '''
+            }
+        }
+
+    }
+
+    post{
+        success{
+            emailext{
+                subject: "Pipeline SUCCESS build for MUSIFY"
+                body: "SUCCESS"
+                to: "surajdwivedi644@gmail.com"
+            }
+        }
+        failure{
+            emailext{
+                subject: "Pipeline FAILURE build for MUSIFY"
+                body: "FAILURE"
+                to: "surajdwivedi644@gmail.com"
+            }
+        }
     }
 
 }
