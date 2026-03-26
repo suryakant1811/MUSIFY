@@ -15,3 +15,13 @@ max_public_ip_on_louch defines Every EC2 launched in this subnet gets:
 
 and in private just remove this 
 
+======================Internet gateway
+just give the vpc id in which you want to attach it 
+
+=====================Route table
+
+     
+
+give vpc id then internet gatway in route block to attach the ig with  all/access from anywhere cidr bloack open
+
+use aws_route_table_association for the conncetion of subnets 
