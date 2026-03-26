@@ -20,8 +20,15 @@ just give the vpc id in which you want to attach it
 
 =====================Route table
 
-     
-
 give vpc id then internet gatway in route block to attach the ig with  all/access from anywhere cidr bloack open
 
 use aws_route_table_association for the conncetion of subnets 
+just give vpcid and subnet id wehich allows public route_table
+
+========================elastic IP
+
+this is needed for the natgateway as the ip will be not chnaged after restating 
+
+========================nat gateway
+
+needed to install at the public subnet  so just give subnetid to it along with  elasticIp 
