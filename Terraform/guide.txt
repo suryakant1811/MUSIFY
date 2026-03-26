@@ -13,3 +13,5 @@ max_public_ip_on_louch defines Every EC2 launched in this subnet gets:
 ✔ Public IP
 ✔ Internet access (if route table + IGW configured)
 
+and in private just remove this 
+
